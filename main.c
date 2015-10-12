@@ -36,6 +36,19 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+#ifdef MAX_HASH_SIZE
+    /* initial hash table */
+#include "phonebook_opt.h"
+    for (i = 0; i < MAX_HASH_SIZE; i++) {
+        hash_table[i] = NULL;
+    }
+#endif
+
+
+#ifdef _BST_
+#include "phonebook_opt.h"
+#endif
+
     /* build the entry */
     entry *pHead, *e;
     pHead = (entry *) malloc(sizeof(entry));
@@ -47,6 +60,8 @@ int main(int argc, char *argv[])
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
     clock_gettime(CLOCK_REALTIME, &start);
+    entry * tHead = NULL;
+    e = tHead;
     while (fgets(line, sizeof(line), fp)) {
         while (line[i] != '\0')
             i++;
@@ -54,18 +69,17 @@ int main(int argc, char *argv[])
         i = 0;
         e = append(line, e);
     }
+    tHead = e;
     clock_gettime(CLOCK_REALTIME, &end);
     cpu_time1 = diff_in_second(start, end);
 
     /* close file as soon as possible */
     fclose(fp);
-
     e = pHead;
 
     /* the givn last name to find */
     char input[MAX_LAST_NAME_SIZE] = "zyxel";
-    e = pHead;
-
+    e = tHead;
     assert(findName(input, e) &&
            "Did you implement findName() in " IMPL "?");
     assert(0 == strcmp(findName(input, e)->lastName, "zyxel"));
