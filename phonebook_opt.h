@@ -23,7 +23,7 @@ typedef struct __PHONE_BOOK_NEW {
     char lastName[MAX_LAST_NAME_SIZE];
     detail * personDetail;
     struct __PHONE_BOOK_NEW * pNext;
-}entry;
+} entry;
 #endif
 
 #ifdef _HASH_
@@ -41,7 +41,7 @@ typedef struct __PHONE_BOOK_BST {
     struct __PHONE_BOOK_BST * rightNode;
     struct __PHONE_BOOK_BST * parent;
     struct __PHONE_BOOK_BST * pNext;
-}entry;
+} entry;
 entry * root;
 #endif
 entry *findName(char lastname[], entry *pHead);
